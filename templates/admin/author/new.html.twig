@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{#  il existe une variable nommée  app  qui est toujours disponible dans tous vos templates. 
+    Cette variable contient plein de choses intéressantes, comme la requête en cours. 
+    On peut aussi y trouver le nom de la route qui a été appelée grâce à  app.current_route 
+    Si la route appelée est  app_admin_author_new  , nous afficherons “Ajout”, sinon ce sera “Édition”. 
+    Nous pouvons écrire cette condition sous forme d’un ternaire, et mieux encore, stocker le résultat 
+    dans une variable une fois pour toute la page grâce au mot-clé : set
+#}
+{% set action = app.current_route == 'app_admin_author_new' ? 'Ajout' : 'Édition' %}
+
+{% block title %}{{ action }} d'auteur{% endblock %}
+
+{% block body %}
+<section class="container px-4">
+    <div class="w-50 m-auto">
+        <p class = "downToBeSeen"></p>
+        <h1>{{ action }} d'auteur</h1>
+            
+        {{ form_start(form) }}
+        {{ form_row(form.name, {label: 'Nom'}) }}
+        {{ form_row(form.dateOfBirth, {label: 'Date de naissance'}) }}
+        {{ form_row(form.dateOfDeath, {label: 'Date de décès'}) }}
+        {{ form_row(form.nationality, {label: 'Nationalité'}) }}
+        {{ form_row(form.books, {label: 'Livres'}) }}
+        {{ form_row(form.certification) }}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

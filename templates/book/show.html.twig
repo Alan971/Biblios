@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% set page_titre =  book is not null ? book.title : 'Livre inconnu' %}
+{% block title %}page_titre{% endblock %}
+
+{% block body %}
+
+<section class="container py-5">
+    {% if book is not null %}
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    <img class="card-img-top mb-5 mb-md-0" src="{{ book.cover }}" alt="Couverture de {{ book.title }}">
+                </div>
+                <div class="col-md-6">
+                    <div class="small mb-1">ISBN : {{ book.isbn }}</div>
+                    <h1 class="display-5 fw-bolder">{{ book.title }}</h1>
+                    <div class ="fs-5 mb-5">
+                        <span class="text-decoration-line-through"> Auteur(s): {{book.authors|map(a =>a.name)|join(',') }} </span>
+                    </div>
+                    <div class ="fs-5 mb-5">
+                        <span class="text-decoration-line-through"> Editeur: {{book.editor.name}} </span>
+                    </div>
+                    <div class ="fs-5 mb-5">
+                        <span class="text-decoration-line-through"> {{book.pageNumber}} {{ book.pageNumber is not null ? ' pages' }}</span>
+                            <span>- {{book.editedAt|date('d M Y')}} </span>
+                    </div>
+                    <div class ="fs-5 mb-5">
+                        <span class="text-decoration-line-through">Statut : {{book.status.getLabel()}} </span>
+                    </div>
+                    <p class="lead"> {{book.plot}} </p>
+                    <div class="d-flex"> 
+                        <a href="{{ path('app_book_index') }}" class="btn btn-outline-dark flex-shrink-0" type="button">
+                            Retour à la liste
+                        </a>
+                    </div>
+                </div>
+            </div>
+    {% else %}
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    Livre non trouvé
+                </div>
+                <div class="d-flex"> 
+                    <a href="{{ path('app_book_index') }}" class="btn btn-outline-dark flex-shrink-0" type="button">
+                        Retour à la liste
+                    </a>
+                </div>
+            </div>
+    {% endif %}
+        </div>
+</section>
+{% endblock %}
